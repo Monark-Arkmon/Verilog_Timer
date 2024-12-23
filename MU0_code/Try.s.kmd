@@ -1,0 +1,1220 @@
+KMD
+00000000:       ; ORG &0000
+00000000:       ; 
+00000000:       ; ; Initialize display locations to No pattern
+00000000: 02A8  ; LDA No_PATTERN
+00000001: 1FFA  ; STA &FFA
+00000002: 1FF9  ; STA &FF9
+00000003: 1FF8  ; STA &FF8
+00000004: 1FF7  ; STA &FF7
+00000005: 1FF6  ; STA &FF6
+00000006: 1FF5  ; STA &FF5
+00000007: 1FFF  ; STA &FFF
+00000008:       ; 
+00000008:       ; 
+00000008:       ; 
+00000008:       ; check_button
+00000008: 0FF1  ;     LDA &FF1
+00000009: 600B  ;     JNE start_lights
+0000000A: 4008  ;     JMP check_button
+0000000B:       ; 
+0000000B:       ; 
+0000000B:       ; 
+0000000B:       ; ; Load the pattern for H, E, L, L, O into the display
+0000000B:       ; start_lights
+0000000B:       ; 
+0000000B: 0279  ;     LDA H_PATTERN
+0000000C: 1FF9  ;     STA &FF9
+0000000D:       ; 
+0000000D: 027A  ;     LDA E_PATTERN
+0000000E: 1FF8  ;     STA &FF8
+0000000F:       ; 
+0000000F: 027B  ;     LDA L_PATTERN
+00000010: 1FF7  ;     STA &FF7
+00000011:       ; 
+00000011: 027B  ;     LDA L_PATTERN
+00000012: 1FF6  ;     STA &FF6
+00000013:       ; 
+00000013: 027C  ;     LDA O_PATTERN
+00000014: 1FF5  ;     STA &FF5
+00000015:       ; 
+00000015: 02A0  ;     LDA all_lights
+00000016: 1FFF  ;     STA &FFF
+00000017:       ; 
+00000017: 02A5  ;     LDA delay_i
+00000018:       ;         loopi
+00000018: 32A3  ;         SUB one
+00000019: 501B  ;         JGE loopj
+0000001A: 4021  ;         JMP close_hello
+0000001B:       ;         loopj
+0000001B: 12A7  ;             STA loop_i_acc_store
+0000001C: 02A6  ;             LDA delay_j
+0000001D:       ;         
+0000001D:       ;             loopj_inner
+0000001D: 32A3  ;                 SUB one
+0000001E: 601D  ;                 JNE loopj_inner
+0000001F:       ; 
+0000001F: 02A7  ;         LDA loop_i_acc_store
+00000020: 4018  ;         JMP loopi
+00000021:       ; 
+00000021:       ; 
+00000021:       ; 
+00000021:       ; close_hello
+00000021:       ; 
+00000021: 02A8  ;     LDA No_PATTERN
+00000022: 1FFA  ;     STA &FFA
+00000023: 1FF9  ;     STA &FF9
+00000024: 1FF8  ;     STA &FF8
+00000025: 1FF7  ;     STA &FF7
+00000026: 1FF6  ;     STA &FF6
+00000027: 1FF5  ;     STA &FF5
+00000028: 1FFF  ;     STA &FFF
+00000029:       ; 
+00000029:       ; 
+00000029:       ; 
+00000029:       ; ; Input first digit
+00000029:       ; input_digit_1
+00000029:       ; 
+00000029:       ;     input_1
+00000029: 0FF2  ;         LDA &FF2
+0000002A: 3291  ;         SUB K0_PATTERN
+0000002B: 602F  ;         JNE input_2
+0000002C: 0287  ;         LDA M_ZERO_PATTERN
+0000002D: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+0000002E: 4065  ;         JMP input_digit_2
+0000002F:       ; 
+0000002F:       ;     input_2
+0000002F: 0FF2  ;         LDA &FF2
+00000030: 3292  ;         SUB K1_PATTERN
+00000031: 6035  ;         JNE input_3
+00000032: 0288  ;         LDA M_ONE_PATTERN
+00000033: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000034: 4065  ;         JMP input_digit_2
+00000035:       ; 
+00000035:       ;     input_3
+00000035: 0FF2  ;         LDA &FF2
+00000036: 3293  ;         SUB K2_PATTERN
+00000037: 603B  ;         JNE input_4
+00000038: 0289  ;         LDA M_TWO_PATTERN
+00000039: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+0000003A: 4065  ;         JMP input_digit_2
+0000003B:       ; 
+0000003B:       ;     input_4
+0000003B: 0FF2  ;         LDA &FF2
+0000003C: 3294  ;         SUB K3_PATTERN
+0000003D: 6041  ;         JNE input_5
+0000003E: 028A  ;         LDA M_THREE_PATTERN
+0000003F: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000040: 4065  ;         JMP input_digit_2
+00000041:       ; 
+00000041:       ;     input_5
+00000041: 0FF2  ;         LDA &FF2
+00000042: 3295  ;         SUB K4_PATTERN
+00000043: 6047  ;         JNE input_6
+00000044: 028B  ;         LDA M_FOUR_PATTERN
+00000045: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000046: 4065  ;         JMP input_digit_2
+00000047:       ; 
+00000047:       ;     input_6
+00000047: 0FF2  ;         LDA &FF2
+00000048: 3296  ;         SUB K5_PATTERN
+00000049: 604D  ;         JNE input_7
+0000004A: 028C  ;         LDA M_FIVE_PATTERN
+0000004B: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+0000004C: 4065  ;         JMP input_digit_2
+0000004D:       ; 
+0000004D:       ;     input_7
+0000004D: 0FF2  ;         LDA &FF2
+0000004E: 3297  ;         SUB K6_PATTERN
+0000004F: 6053  ;         JNE input_8
+00000050: 028D  ;         LDA M_SIX_PATTERN
+00000051: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000052: 4065  ;         JMP input_digit_2
+00000053:       ; 
+00000053:       ;     input_8
+00000053: 0FF2  ;         LDA &FF2
+00000054: 3298  ;         SUB K7_PATTERN
+00000055: 6059  ;         JNE input_9
+00000056: 028E  ;         LDA M_SEVEN_PATTERN
+00000057: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000058: 4065  ;         JMP input_digit_2
+00000059:       ; 
+00000059:       ;     input_9
+00000059: 0FF2  ;         LDA &FF2
+0000005A: 3299  ;         SUB K8_PATTERN
+0000005B: 605F  ;         JNE input_10
+0000005C: 028F  ;         LDA M_EIGHT_PATTERN
+0000005D: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+0000005E: 4065  ;         JMP input_digit_2
+0000005F:       ; 
+0000005F:       ;     input_10
+0000005F: 0FF2  ;         LDA &FF2
+00000060: 329A  ;         SUB K9_PATTERN
+00000061: 6029  ;         JNE input_1
+00000062: 0290  ;         LDA M_NINE_PATTERN
+00000063: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000064: 4065  ;         JMP input_digit_2
+00000065:       ; 
+00000065:       ; 
+00000065:       ; 
+00000065:       ; ; Process second digit
+00000065:       ; input_digit_2
+00000065:       ; 
+00000065: 02A4  ;     LDA delay_1
+00000066:       ;     delay_number_loop_1_1
+00000066: 32A3  ;     SUB one
+00000067: 6066  ;     JNE delay_number_loop_1_1
+00000068:       ; 
+00000068: 02A4  ;     LDA delay_1
+00000069:       ;     delay_number_loop_1_2
+00000069: 32A3  ;     SUB one
+0000006A: 6069  ;     JNE delay_number_loop_1_2
+0000006B:       ; 
+0000006B: 02A4  ;     LDA delay_1
+0000006C:       ;     delay_number_loop_1_3
+0000006C: 32A3  ;     SUB one
+0000006D: 606C  ;     JNE delay_number_loop_1_3
+0000006E:       ; 
+0000006E: 02A4  ;     LDA delay_1
+0000006F:       ;     delay_number_loop_1_4
+0000006F: 32A3  ;     SUB one
+00000070: 606F  ;     JNE delay_number_loop_1_4
+00000071:       ; 
+00000071: 02A4  ;     LDA delay_1
+00000072:       ;     delay_number_loop_1_5
+00000072: 32A3  ;     SUB one
+00000073: 6072  ;     JNE delay_number_loop_1_5
+00000074:       ; 
+00000074: 02A4  ;     LDA delay_1
+00000075:       ;     delay_number_loop_1_6
+00000075: 32A3  ;     SUB one
+00000076: 6075  ;     JNE delay_number_loop_1_6
+00000077:       ; 
+00000077: 02A8  ;     LDA No_PATTERN
+00000078: 1FF2  ;     STA &FF2
+00000079:       ; 
+00000079:       ;     input_11
+00000079: 0FF2  ;         LDA &FF2
+0000007A: 3291  ;         SUB K0_PATTERN
+0000007B: 6081  ;         JNE input_12
+0000007C: 0FF5  ;         LDA &FF5
+0000007D: 1FF6  ;         STA &FF6
+0000007E: 027D  ;         LDA ZERO_PATTERN
+0000007F: 1FF5  ;         STA &FF5  ; Store second digit in &FF5 (for display)
+00000080: 40A9  ;         JMP input_digit_3
+00000081:       ; 
+00000081:       ;     input_12
+00000081: 0FF2  ;         LDA &FF2
+00000082: 3292  ;         SUB K1_PATTERN
+00000083: 6089  ;         JNE input_13
+00000084: 0FF5  ;         LDA &FF5
+00000085: 1FF6  ;         STA &FF6
+00000086: 027E  ;         LDA ONE_PATTERN
+00000087: 1FF5  ;         STA &FF5  ; Store second digit in &FF5 (for display)
+00000088: 40A9  ;         JMP input_digit_3
+00000089:       ; 
+00000089:       ;     input_13
+00000089: 0FF2  ;         LDA &FF2
+0000008A: 3293  ;         SUB K2_PATTERN
+0000008B: 6091  ;         JNE input_14
+0000008C: 0FF5  ;         LDA &FF5
+0000008D: 1FF6  ;         STA &FF6
+0000008E: 027F  ;         LDA TWO_PATTERN
+0000008F: 1FF5  ;         STA &FF5  ; Store second digit in &FF5 (for display)
+00000090: 40A9  ;         JMP input_digit_3
+00000091:       ; 
+00000091:       ;     input_14
+00000091: 0FF2  ;         LDA &FF2
+00000092: 3294  ;         SUB K3_PATTERN
+00000093: 6099  ;         JNE input_15
+00000094: 0FF5  ;         LDA &FF5
+00000095: 1FF6  ;         STA &FF6
+00000096: 0280  ;         LDA THREE_PATTERN
+00000097: 1FF5  ;         STA &FF5  ; Store second digit in &FF5 (for display)
+00000098: 40A9  ;         JMP input_digit_3
+00000099:       ; 
+00000099:       ;     input_15
+00000099: 0FF2  ;         LDA &FF2
+0000009A: 3295  ;         SUB K4_PATTERN
+0000009B: 60A1  ;         JNE input_16
+0000009C: 0FF5  ;         LDA &FF5
+0000009D: 1FF6  ;         STA &FF6
+0000009E: 0281  ;         LDA FOUR_PATTERN
+0000009F: 1FF5  ;         STA &FF5  ; Store second digit in &FF5 (for display)
+000000A0: 40A9  ;         JMP input_digit_3
+000000A1:       ; 
+000000A1:       ;     input_16
+000000A1: 0FF2  ;         LDA &FF2
+000000A2: 3296  ;         SUB K5_PATTERN
+000000A3: 6079  ;         JNE input_11
+000000A4: 0FF5  ;         LDA &FF5
+000000A5: 1FF6  ;         STA &FF6
+000000A6: 0282  ;         LDA FIVE_PATTERN
+000000A7: 1FF5  ;         STA &FF5  ; Store second digit in &FF5 (for display)
+000000A8: 40A9  ;         JMP input_digit_3
+000000A9:       ; 
+000000A9:       ; 
+000000A9:       ; 
+000000A9:       ; input_digit_3
+000000A9:       ; 
+000000A9: 02A4  ;     LDA delay_1
+000000AA:       ;     delay_number_loop_2_1
+000000AA: 32A3  ;     SUB one
+000000AB: 60AA  ;     JNE delay_number_loop_2_1
+000000AC:       ; 
+000000AC: 02A4  ;     LDA delay_1
+000000AD:       ;     delay_number_loop_2_2
+000000AD: 32A3  ;     SUB one
+000000AE: 60AD  ;     JNE delay_number_loop_2_2
+000000AF:       ; 
+000000AF: 02A4  ;     LDA delay_1
+000000B0:       ;     delay_number_loop_2_3
+000000B0: 32A3  ;     SUB one
+000000B1: 60B0  ;     JNE delay_number_loop_2_3
+000000B2:       ; 
+000000B2: 02A4  ;     LDA delay_1
+000000B3:       ;     delay_number_loop_2_4
+000000B3: 32A3  ;     SUB one
+000000B4: 60B3  ;     JNE delay_number_loop_2_4
+000000B5:       ; 
+000000B5: 02A4  ;     LDA delay_1
+000000B6:       ;     delay_number_loop_2_5
+000000B6: 32A3  ;     SUB one
+000000B7: 60B6  ;     JNE delay_number_loop_2_5
+000000B8:       ; 
+000000B8: 02A4  ;     LDA delay_1
+000000B9:       ;     delay_number_loop_2_6
+000000B9: 32A3  ;     SUB one
+000000BA: 60B9  ;     JNE delay_number_loop_2_6
+000000BB:       ; 
+000000BB: 02A8  ;     LDA No_PATTERN
+000000BC: 1FF2  ;     STA &FF2
+000000BD:       ; 
+000000BD:       ;     input_31
+000000BD: 0FF2  ;         LDA &FF2
+000000BE: 3291  ;         SUB K0_PATTERN
+000000BF: 60C7  ;         JNE input_32
+000000C0: 0FF6  ;         LDA &FF6
+000000C1: 1FF7  ;         STA &FF7
+000000C2: 0FF5  ;         LDA &FF5
+000000C3: 1FF6  ;         STA &FF6
+000000C4: 027D  ;         LDA ZERO_PATTERN
+000000C5: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+000000C6: 4121  ;         JMP clear_enter
+000000C7:       ; 
+000000C7:       ;     input_32
+000000C7: 0FF2  ;         LDA &FF2
+000000C8: 3292  ;         SUB K1_PATTERN
+000000C9: 60D1  ;         JNE input_33
+000000CA: 0FF6  ;         LDA &FF6
+000000CB: 1FF7  ;         STA &FF7
+000000CC: 0FF5  ;         LDA &FF5
+000000CD: 1FF6  ;         STA &FF6
+000000CE: 027E  ;         LDA ONE_PATTERN
+000000CF: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+000000D0: 4121  ;         JMP clear_enter
+000000D1:       ; 
+000000D1:       ;     input_33
+000000D1: 0FF2  ;         LDA &FF2
+000000D2: 3293  ;         SUB K2_PATTERN
+000000D3: 60DB  ;         JNE input_34
+000000D4: 0FF6  ;         LDA &FF6
+000000D5: 1FF7  ;         STA &FF7
+000000D6: 0FF5  ;         LDA &FF5
+000000D7: 1FF6  ;         STA &FF6
+000000D8: 027F  ;         LDA TWO_PATTERN
+000000D9: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+000000DA: 4121  ;         JMP clear_enter
+000000DB:       ; 
+000000DB:       ;     input_34
+000000DB: 0FF2  ;         LDA &FF2
+000000DC: 3294  ;         SUB K3_PATTERN
+000000DD: 60E5  ;         JNE input_35
+000000DE: 0FF6  ;         LDA &FF6
+000000DF: 1FF7  ;         STA &FF7
+000000E0: 0FF5  ;         LDA &FF5
+000000E1: 1FF6  ;         STA &FF6
+000000E2: 0280  ;         LDA THREE_PATTERN
+000000E3: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+000000E4: 4121  ;         JMP clear_enter
+000000E5:       ; 
+000000E5:       ;     input_35
+000000E5: 0FF2  ;         LDA &FF2
+000000E6: 3295  ;         SUB K4_PATTERN
+000000E7: 60EF  ;         JNE input_36
+000000E8: 0FF6  ;         LDA &FF6
+000000E9: 1FF7  ;         STA &FF7
+000000EA: 0FF5  ;         LDA &FF5
+000000EB: 1FF6  ;         STA &FF6
+000000EC: 0281  ;         LDA FOUR_PATTERN
+000000ED: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+000000EE: 4121  ;         JMP clear_enter
+000000EF:       ; 
+000000EF:       ;    input_36
+000000EF: 0FF2  ;         LDA &FF2
+000000F0: 3296  ;         SUB K5_PATTERN
+000000F1: 60F9  ;         JNE input_37
+000000F2: 0FF6  ;         LDA &FF6
+000000F3: 1FF7  ;         STA &FF7
+000000F4: 0FF5  ;         LDA &FF5
+000000F5: 1FF6  ;         STA &FF6
+000000F6: 0282  ;         LDA FIVE_PATTERN
+000000F7: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+000000F8: 4121  ;         JMP clear_enter
+000000F9:       ; 
+000000F9:       ;     input_37
+000000F9: 0FF2  ;         LDA &FF2
+000000FA: 3297  ;         SUB K6_PATTERN
+000000FB: 6103  ;         JNE input_38
+000000FC: 0FF6  ;         LDA &FF6
+000000FD: 1FF7  ;         STA &FF7
+000000FE: 0FF5  ;         LDA &FF5
+000000FF: 1FF6  ;         STA &FF6
+00000100: 0283  ;         LDA SIX_PATTERN
+00000101: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000102: 4121  ;         JMP clear_enter
+00000103:       ; 
+00000103:       ;     input_38
+00000103: 0FF2  ;         LDA &FF2
+00000104: 3298  ;         SUB K7_PATTERN
+00000105: 610D  ;         JNE input_39
+00000106: 0FF6  ;         LDA &FF6
+00000107: 1FF7  ;         STA &FF7
+00000108: 0FF5  ;         LDA &FF5
+00000109: 1FF6  ;         STA &FF6
+0000010A: 0284  ;         LDA SEVEN_PATTERN
+0000010B: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+0000010C: 4121  ;         JMP clear_enter
+0000010D:       ; 
+0000010D:       ;     input_39
+0000010D: 0FF2  ;         LDA &FF2
+0000010E: 3299  ;         SUB K8_PATTERN
+0000010F: 6117  ;         JNE input_310
+00000110: 0FF6  ;         LDA &FF6
+00000111: 1FF7  ;         STA &FF7
+00000112: 0FF5  ;         LDA &FF5
+00000113: 1FF6  ;         STA &FF6
+00000114: 0285  ;         LDA EIGHT_PATTERN
+00000115: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000116: 4121  ;         JMP clear_enter
+00000117:       ; 
+00000117:       ;     input_310
+00000117: 0FF2  ;         LDA &FF2
+00000118: 329A  ;         SUB K9_PATTERN
+00000119: 60BD  ;         JNE input_31
+0000011A: 0FF6  ;         LDA &FF6
+0000011B: 1FF7  ;         STA &FF7
+0000011C: 0FF5  ;         LDA &FF5
+0000011D: 1FF6  ;         STA &FF6
+0000011E: 0286  ;         LDA NINE_PATTERN
+0000011F: 1FF5  ;         STA &FF5  ; Store the first digit in &FF5 (for display)
+00000120: 4121  ;         JMP clear_enter
+00000121:       ; 
+00000121:       ; 
+00000121:       ; 
+00000121:       ; clear_enter
+00000121:       ; 
+00000121: 02A4  ;     LDA delay_1
+00000122:       ;     delay_number_loop_3_1
+00000122: 32A3  ;     SUB one
+00000123: 6122  ;     JNE delay_number_loop_3_1
+00000124:       ; 
+00000124: 02A4  ;     LDA delay_1
+00000125:       ;     delay_number_loop_3_2
+00000125: 32A3  ;     SUB one
+00000126: 6125  ;     JNE delay_number_loop_3_2
+00000127:       ; 
+00000127: 02A4  ;     LDA delay_1
+00000128:       ;     delay_number_loop_3_3
+00000128: 32A3  ;     SUB one
+00000129: 6128  ;     JNE delay_number_loop_3_3
+0000012A:       ; 
+0000012A: 02A4  ;     LDA delay_1
+0000012B:       ;     delay_number_loop_3_4
+0000012B: 32A3  ;     SUB one
+0000012C: 612B  ;     JNE delay_number_loop_3_4
+0000012D:       ; 
+0000012D: 02A4  ;     LDA delay_1
+0000012E:       ;     delay_number_loop_3_5
+0000012E: 32A3  ;     SUB one
+0000012F: 612E  ;     JNE delay_number_loop_3_5
+00000130:       ; 
+00000130: 02A4  ;     LDA delay_1
+00000131:       ;     delay_number_loop_3_6
+00000131: 32A3  ;     SUB one
+00000132: 6131  ;     JNE delay_number_loop_3_6
+00000133:       ; 
+00000133: 02A8  ;     LDA No_PATTERN
+00000134: 1FF2  ;     STA &FF2
+00000135:       ; 
+00000135:       ;     input_41
+00000135: 0FF2  ;         LDA &FF2
+00000136: 329B  ;         SUB KC_PATTERN
+00000137: 6141  ;         JNE input_42
+00000138:       ;         
+00000138: 0FF6  ;         LDA &FF6
+00000139: 1FF7  ;         STA &FF7
+0000013A: 0FF5  ;         LDA &FF5
+0000013B: 1FF6  ;         STA &FF6
+0000013C:       ;         
+0000013C: 02A8  ;         LDA No_PATTERN
+0000013D: 1FF5  ;         STA &FF5
+0000013E: 1FF6  ;         STA &FF6
+0000013F: 1FF7  ;         STA &FF7
+00000140: 4029  ;         JMP input_digit_1
+00000141:       ; 
+00000141:       ;     input_42
+00000141: 0FF2  ;         LDA &FF2
+00000142: 329C  ;         SUB KA_PATTERN
+00000143: 6135  ;         JNE input_41
+00000144: 4145  ;         JMP main_loop
+00000145:       ; 
+00000145:       ; 
+00000145:       ; 
+00000145:       ; 
+00000145:       ; 
+00000145:       ; 
+00000145:       ; 
+00000145:       ; main_loop
+00000145:       ; 
+00000145:       ; 
+00000145:       ; 
+00000145:       ; one_second
+00000145:       ; 
+00000145:       ;     test_1
+00000145: 0FF5  ;         LDA &FF5
+00000146: 3286  ;         SUB NINE_PATTERN          ; Check if digit is 9
+00000147: 6158  ;         JNE test_2
+00000148: 02A8  ;         LDA No_PATTERN
+00000149: 1FFF  ;         STA &FFF
+0000014A: 029D  ;         LDA red_light
+0000014B: 1FFF  ;         STA &FFF
+0000014C:       ;     
+0000014C: 02A5  ;         LDA delay_i
+0000014D:       ;             loop_i_2
+0000014D: 32A3  ;             SUB one
+0000014E: 5150  ;             JGE loop_j_2
+0000014F: 4156  ;             JMP eight
+00000150:       ;             loop_j_2
+00000150: 12A7  ;                 STA loop_i_acc_store
+00000151: 02A6  ;                 LDA delay_j
+00000152:       ;         
+00000152:       ;                 loop_j_2_inner
+00000152: 32A3  ;                     SUB one
+00000153: 6152  ;                     JNE loop_j_2_inner
+00000154:       ; 
+00000154: 02A7  ;             LDA loop_i_acc_store
+00000155: 414D  ;             JMP loop_i_2
+00000156:       ; 
+00000156:       ;     eight
+00000156: 0285  ;         LDA EIGHT_PATTERN
+00000157: 1FF5  ;         STA &FF5
+00000158:       ; 
+00000158:       ; 
+00000158:       ;     test_2
+00000158: 0FF5  ;         LDA &FF5
+00000159: 3285  ;         SUB EIGHT_PATTERN          ; Check if digit is 8
+0000015A: 616B  ;         JNE test_3
+0000015B: 02A8  ;         LDA No_PATTERN
+0000015C: 1FFF  ;         STA &FFF
+0000015D: 029F  ;         LDA green_light
+0000015E: 1FFF  ;         STA &FFF
+0000015F:       ;     
+0000015F: 02A5  ;         LDA delay_i
+00000160:       ;             loop_i_3
+00000160: 32A3  ;             SUB one
+00000161: 5163  ;             JGE loop_j_3
+00000162: 4169  ;             JMP seven
+00000163:       ;             loop_j_3
+00000163: 12A7  ;                 STA loop_i_acc_store
+00000164: 02A6  ;                 LDA delay_j
+00000165:       ;         
+00000165:       ;             loop_j_3_inner
+00000165: 32A3  ;                 SUB one
+00000166: 6165  ;                 JNE loop_j_3_inner
+00000167:       ; 
+00000167: 02A7  ;         LDA loop_i_acc_store
+00000168: 4160  ;         JMP loop_i_3
+00000169:       ; 
+00000169:       ;     seven
+00000169: 0284  ;         LDA SEVEN_PATTERN
+0000016A: 1FF5  ;         STA &FF5
+0000016B:       ; 
+0000016B:       ; 
+0000016B:       ;     test_3
+0000016B: 0FF5  ;         LDA &FF5
+0000016C: 3284  ;         SUB SEVEN_PATTERN        ; Check if digit is 7
+0000016D: 617E  ;         JNE test_4
+0000016E: 02A8  ;         LDA No_PATTERN
+0000016F: 1FFF  ;         STA &FFF
+00000170: 029D  ;         LDA red_light
+00000171: 1FFF  ;         STA &FFF
+00000172:       ;     
+00000172: 02A5  ;         LDA delay_i
+00000173:       ;             loop_i_4
+00000173: 32A3  ;             SUB one
+00000174: 5176  ;             JGE loop_j_4
+00000175: 417C  ;             JMP six
+00000176:       ;             loop_j_4
+00000176: 12A7  ;                 STA loop_i_acc_store
+00000177: 02A6  ;                 LDA delay_j
+00000178:       ;         
+00000178:       ;                 loop_j_4_inner
+00000178: 32A3  ;                     SUB one
+00000179: 6178  ;                     JNE loop_j_4_inner
+0000017A:       ; 
+0000017A: 02A7  ;         LDA loop_i_acc_store
+0000017B: 4173  ;         JMP loop_i_4
+0000017C:       ;         
+0000017C:       ;     six
+0000017C: 0283  ;         LDA SIX_PATTERN
+0000017D: 1FF5  ;         STA &FF5
+0000017E:       ; 
+0000017E:       ; 
+0000017E:       ;     test_4
+0000017E: 0FF5  ;         LDA &FF5
+0000017F: 3283  ;         SUB SIX_PATTERN         ; Check if digit is 6
+00000180: 6191  ;         JNE test_5
+00000181: 02A8  ;         LDA No_PATTERN
+00000182: 1FFF  ;         STA &FFF
+00000183: 029F  ;         LDA green_light
+00000184: 1FFF  ;         STA &FFF
+00000185:       ;     
+00000185: 02A5  ;         LDA delay_i
+00000186:       ;             loop_i_5
+00000186: 32A3  ;             SUB one
+00000187: 5189  ;             JGE loop_j_5
+00000188: 418F  ;             JMP five
+00000189:       ;             loop_j_5
+00000189: 12A7  ;                 STA loop_i_acc_store
+0000018A: 02A6  ;                 LDA delay_j
+0000018B:       ;         
+0000018B:       ;                 loop_j_5_inner
+0000018B: 32A3  ;                     SUB one
+0000018C: 618B  ;                     JNE loop_j_5_inner
+0000018D:       ; 
+0000018D: 02A7  ;         LDA loop_i_acc_store
+0000018E: 4186  ;         JMP loop_i_5
+0000018F:       ;         
+0000018F:       ;     five
+0000018F: 0282  ;         LDA FIVE_PATTERN
+00000190: 1FF5  ;         STA &FF5
+00000191:       ; 
+00000191:       ; 
+00000191:       ;     test_5
+00000191: 0FF5  ;         LDA &FF5
+00000192: 3282  ;         SUB FIVE_PATTERN         ; Check if digit is 5
+00000193: 61A4  ;         JNE test_6
+00000194: 02A8  ;         LDA No_PATTERN
+00000195: 1FFF  ;         STA &FFF
+00000196: 029D  ;     LDA red_light
+00000197: 1FFF  ;     STA &FFF
+00000198:       ;     
+00000198: 02A5  ;     LDA delay_i
+00000199:       ;         loop_i_6
+00000199: 32A3  ;         SUB one
+0000019A: 519C  ;         JGE loop_j_6
+0000019B: 41A2  ;         JMP four
+0000019C:       ;         loop_j_6
+0000019C: 12A7  ;             STA loop_i_acc_store
+0000019D: 02A6  ;             LDA delay_j
+0000019E:       ;         
+0000019E:       ;             loop_j_6_inner
+0000019E: 32A3  ;                 SUB one
+0000019F: 619E  ;                 JNE loop_j_6_inner
+000001A0:       ; 
+000001A0: 02A7  ;         LDA loop_i_acc_store
+000001A1: 4199  ;         JMP loop_i_6
+000001A2:       ; four
+000001A2: 0281  ;     LDA FOUR_PATTERN
+000001A3: 1FF5  ;     STA &FF5
+000001A4:       ; 
+000001A4:       ; 
+000001A4:       ; test_6
+000001A4: 0FF5  ;     LDA &FF5
+000001A5: 3281  ;     SUB FOUR_PATTERN          ; Check if digit is 4
+000001A6: 61B7  ;     JNE test_7
+000001A7: 02A8  ;     LDA No_PATTERN
+000001A8: 1FFF  ;     STA &FFF
+000001A9: 029F  ;     LDA green_light
+000001AA: 1FFF  ;     STA &FFF
+000001AB:       ;     
+000001AB: 02A5  ;     LDA delay_i
+000001AC:       ;         loop_i_7
+000001AC: 32A3  ;         SUB one
+000001AD: 51AF  ;         JGE loop_j_7
+000001AE: 41B5  ;         JMP three
+000001AF:       ;         loop_j_7
+000001AF: 12A7  ;             STA loop_i_acc_store
+000001B0: 02A6  ;             LDA delay_j
+000001B1:       ;         
+000001B1:       ;             loop_j_7_inner
+000001B1: 32A3  ;                 SUB one
+000001B2: 61B1  ;                 JNE loop_j_7_inner
+000001B3:       ; 
+000001B3: 02A7  ;         LDA loop_i_acc_store
+000001B4: 41AC  ;         JMP loop_i_7
+000001B5:       ; three
+000001B5: 0280  ;     LDA THREE_PATTERN
+000001B6: 1FF5  ;     STA &FF5
+000001B7:       ; 
+000001B7:       ; 
+000001B7:       ; test_7
+000001B7: 0FF5  ;     LDA &FF5
+000001B8: 3280  ;     SUB THREE_PATTERN        ; Check if digit is 3
+000001B9: 61CA  ;     JNE test_8
+000001BA: 02A8  ;     LDA No_PATTERN
+000001BB: 1FFF  ;     STA &FFF
+000001BC: 029D  ;     LDA red_light
+000001BD: 1FFF  ;     STA &FFF
+000001BE:       ;     
+000001BE: 02A5  ;     LDA delay_i
+000001BF:       ;         loop_i_8
+000001BF: 32A3  ;         SUB one
+000001C0: 51C2  ;         JGE loop_j_8
+000001C1: 41C8  ;         JMP two
+000001C2:       ;         loop_j_8
+000001C2: 12A7  ;             STA loop_i_acc_store
+000001C3: 02A6  ;             LDA delay_j
+000001C4:       ;         
+000001C4:       ;             loop_j_8_inner
+000001C4: 32A3  ;                 SUB one
+000001C5: 61C4  ;                 JNE loop_j_8_inner
+000001C6:       ; 
+000001C6: 02A7  ;         LDA loop_i_acc_store
+000001C7: 41BF  ;         JMP loop_i_8
+000001C8:       ; two
+000001C8: 027F  ;     LDA TWO_PATTERN
+000001C9: 1FF5  ;     STA &FF5
+000001CA:       ; 
+000001CA:       ; 
+000001CA:       ; test_8
+000001CA: 0FF5  ;     LDA &FF5
+000001CB: 327F  ;     SUB TWO_PATTERN      ; Check if digit is 2
+000001CC: 61DD  ;     JNE test_9
+000001CD: 02A8  ;     LDA No_PATTERN
+000001CE: 1FFF  ;     STA &FFF
+000001CF: 029F  ;     LDA green_light
+000001D0: 1FFF  ;     STA &FFF
+000001D1:       ;     
+000001D1: 02A5  ;     LDA delay_i
+000001D2:       ;         loop_i_9
+000001D2: 32A3  ;         SUB one
+000001D3: 51D5  ;         JGE loop_j_9
+000001D4: 41DB  ;         JMP One
+000001D5:       ;         loop_j_9
+000001D5: 12A7  ;             STA loop_i_acc_store
+000001D6: 02A6  ;             LDA delay_j
+000001D7:       ;         
+000001D7:       ;             loop_j_9_inner
+000001D7: 32A3  ;                 SUB one
+000001D8: 61D7  ;                 JNE loop_j_9_inner
+000001D9:       ; 
+000001D9: 02A7  ;         LDA loop_i_acc_store
+000001DA: 41D2  ;         JMP loop_i_9
+000001DB:       ; One
+000001DB: 027E  ;     LDA ONE_PATTERN
+000001DC: 1FF5  ;     STA &FF5
+000001DD:       ; 
+000001DD:       ; 
+000001DD:       ; test_9
+000001DD: 0FF5  ;     LDA &FF5
+000001DE: 327E  ;     SUB ONE_PATTERN         ; Check if digit is 1
+000001DF: 61F0  ;     JNE test_0
+000001E0: 02A8  ;     LDA No_PATTERN
+000001E1: 1FFF  ;     STA &FFF
+000001E2: 029D  ;     LDA red_light
+000001E3: 1FFF  ;     STA &FFF
+000001E4:       ;     
+000001E4: 02A5  ;     LDA delay_i
+000001E5:       ;         loop_i_10
+000001E5: 32A3  ;         SUB one
+000001E6: 51E8  ;         JGE loop_j_10
+000001E7: 41EE  ;         JMP zero
+000001E8:       ;         loop_j_10
+000001E8: 12A7  ;             STA loop_i_acc_store
+000001E9: 02A6  ;             LDA delay_j
+000001EA:       ;         
+000001EA:       ;             loop_j_10_inner
+000001EA: 32A3  ;                 SUB one
+000001EB: 61EA  ;                 JNE loop_j_10_inner
+000001EC:       ; 
+000001EC: 02A7  ;         LDA loop_i_acc_store
+000001ED: 41E5  ;         JMP loop_i_10
+000001EE:       ; zero
+000001EE: 027D  ;     LDA ZERO_PATTERN
+000001EF: 1FF5  ;     STA &FF5
+000001F0:       ; 
+000001F0:       ; 
+000001F0:       ; test_0
+000001F0: 0FF5  ;     LDA &FF5
+000001F1: 327D  ;     SUB ZERO_PATTERN          ; Check if digit is 0
+000001F2: 6145  ;     JNE test_1
+000001F3: 02A8  ;     LDA No_PATTERN
+000001F4: 1FFF  ;     STA &FFF
+000001F5: 029F  ;     LDA green_light
+000001F6: 1FFF  ;     STA &FFF
+000001F7:       ;     
+000001F7: 02A5  ;     LDA delay_i
+000001F8:       ;         loop_i_1
+000001F8: 32A3  ;         SUB one
+000001F9: 51FB  ;         JGE loop_j_1
+000001FA: 4201  ;         JMP check_0s
+000001FB:       ;         loop_j_1
+000001FB: 12A7  ;             STA loop_i_acc_store
+000001FC: 02A6  ;             LDA delay_j
+000001FD:       ;         
+000001FD:       ;             loop_j_1_inner
+000001FD: 32A3  ;                 SUB one
+000001FE: 61FD  ;                 JNE loop_j_1_inner
+000001FF:       ; 
+000001FF: 02A7  ;         LDA loop_i_acc_store
+00000200: 41F8  ;         JMP loop_i_1
+00000201:       ; 
+00000201:       ; 
+00000201:       ; check_0s
+00000201:       ; 
+00000201: 0FF5  ;     LDA &FF5
+00000202: 327D  ;     SUB ZERO_PATTERN
+00000203: 620B  ;     JNE two_second
+00000204:       ; 
+00000204: 0FF6  ;     LDA &FF6
+00000205: 327D  ;     SUB ZERO_PATTERN
+00000206: 620B  ;     JNE two_second
+00000207:       ; 
+00000207: 0FF7  ;     LDA &FF7
+00000208: 3287  ;     SUB M_ZERO_PATTERN
+00000209: 620B  ;     JNE two_second
+0000020A: 4269  ;     JMP check_end
+0000020B:       ; 
+0000020B:       ; two_second
+0000020B:       ; 
+0000020B: 0286  ;     LDA NINE_PATTERN
+0000020C: 1FF5  ;     STA &FF5
+0000020D:       ; 
+0000020D:       ;     test_5_1
+0000020D: 0FF6  ;         LDA &FF6
+0000020E: 3282  ;         SUB FIVE_PATTERN         ; Check if digit is 5
+0000020F: 6213  ;         JNE test_6_1
+00000210:       ; 
+00000210: 0281  ;         LDA FOUR_PATTERN
+00000211: 1FF6  ;         STA &FF6
+00000212: 4145  ;         JMP main_loop
+00000213:       ; 
+00000213:       ;     test_6_1
+00000213: 0FF6  ;         LDA &FF6
+00000214: 3281  ;         SUB FOUR_PATTERN          ; Check if digit is 4
+00000215: 6219  ;         JNE test_7_1
+00000216:       ; 
+00000216: 0280  ;         LDA THREE_PATTERN
+00000217: 1FF6  ;         STA &FF6
+00000218: 4145  ;         JMP main_loop
+00000219:       ; 
+00000219:       ;     test_7_1
+00000219: 0FF6  ;         LDA &FF6
+0000021A: 3280  ;         SUB THREE_PATTERN        ; Check if digit is 3
+0000021B: 621F  ;         JNE test_8_1
+0000021C:       ; 
+0000021C: 027F  ;         LDA TWO_PATTERN
+0000021D: 1FF6  ;         STA &FF6
+0000021E: 4145  ;         JMP main_loop
+0000021F:       ; 
+0000021F:       ;     test_8_1
+0000021F: 0FF6  ;         LDA &FF6
+00000220: 327F  ;         SUB TWO_PATTERN      ; Check if digit is 2
+00000221: 6225  ;         JNE test_9_1
+00000222:       ; 
+00000222: 027E  ;         LDA ONE_PATTERN
+00000223: 1FF6  ;         STA &FF6
+00000224: 4145  ;         JMP main_loop
+00000225:       ; 
+00000225:       ;     test_9_1
+00000225: 0FF6  ;         LDA &FF6
+00000226: 327E  ;         SUB ONE_PATTERN         ; Check if digit is 1
+00000227: 622B  ;         JNE test_0_1
+00000228:       ; 
+00000228: 027D  ;         LDA ZERO_PATTERN
+00000229: 1FF6  ;         STA &FF6
+0000022A: 4145  ;         JMP main_loop
+0000022B:       ; 
+0000022B:       ;     test_0_1
+0000022B: 0FF6  ;         LDA &FF6
+0000022C: 327D  ;         SUB ZERO_PATTERN          ; Check if digit is 0
+0000022D: 620D  ;         JNE test_5_1
+0000022E:       ; 
+0000022E: 0282  ;         LDA FIVE_PATTERN
+0000022F: 1FF6  ;         STA &FF6
+00000230:       ; 
+00000230:       ;     
+00000230:       ; one_minute
+00000230:       ; 
+00000230:       ;     test_1_2
+00000230: 0FF7  ;         LDA &FF7
+00000231: 3290  ;         SUB M_NINE_PATTERN          ; Check if digit is 9
+00000232: 6236  ;         JNE test_2_2
+00000233:       ; 
+00000233: 028F  ;         LDA M_EIGHT_PATTERN
+00000234: 1FF7  ;         STA &FF7
+00000235: 4145  ;         JMP main_loop
+00000236:       ; 
+00000236:       ;     test_2_2
+00000236: 0FF7  ;         LDA &FF7
+00000237: 328F  ;         SUB M_EIGHT_PATTERN          ; Check if digit is 8
+00000238: 623C  ;         JNE test_3_2
+00000239:       ; 
+00000239: 028E  ;         LDA M_SEVEN_PATTERN
+0000023A: 1FF7  ;         STA &FF7
+0000023B: 4145  ;         JMP main_loop
+0000023C:       ; 
+0000023C:       ;     test_3_2
+0000023C: 0FF7  ;         LDA &FF7
+0000023D: 328E  ;         SUB M_SEVEN_PATTERN        ; Check if digit is 7
+0000023E: 6242  ;         JNE test_4_2
+0000023F:       ; 
+0000023F: 028D  ;         LDA M_SIX_PATTERN
+00000240: 1FF7  ;         STA &FF7
+00000241: 4145  ;         JMP main_loop
+00000242:       ; 
+00000242:       ;     test_4_2
+00000242: 0FF7  ;         LDA &FF7
+00000243: 328D  ;         SUB M_SIX_PATTERN         ; Check if digit is 6
+00000244: 6248  ;         JNE test_5_2
+00000245:       ; 
+00000245: 028C  ;         LDA M_FIVE_PATTERN
+00000246: 1FF7  ;         STA &FF7
+00000247: 4145  ;         JMP main_loop
+00000248:       ; 
+00000248:       ;     test_5_2
+00000248: 0FF7  ;         LDA &FF7
+00000249: 328C  ;         SUB M_FIVE_PATTERN         ; Check if digit is 5
+0000024A: 624E  ;         JNE test_6_2
+0000024B:       ; 
+0000024B: 028B  ;         LDA M_FOUR_PATTERN
+0000024C: 1FF7  ;         STA &FF7
+0000024D: 4145  ;         JMP main_loop
+0000024E:       ; 
+0000024E:       ;     test_6_2
+0000024E: 0FF7  ;         LDA &FF7
+0000024F: 328B  ;         SUB M_FOUR_PATTERN          ; Check if digit is 4
+00000250: 6254  ;         JNE test_7_2
+00000251:       ; 
+00000251: 028A  ;         LDA M_THREE_PATTERN
+00000252: 1FF7  ;         STA &FF7
+00000253: 4145  ;         JMP main_loop
+00000254:       ; 
+00000254:       ;     test_7_2
+00000254: 0FF7  ;         LDA &FF7
+00000255: 328A  ;         SUB M_THREE_PATTERN        ; Check if digit is 3
+00000256: 625A  ;         JNE test_8_2
+00000257:       ; 
+00000257: 0289  ;         LDA M_TWO_PATTERN
+00000258: 1FF7  ;         STA &FF7
+00000259: 4145  ;         JMP main_loop
+0000025A:       ; 
+0000025A:       ;     test_8_2
+0000025A: 0FF7  ;         LDA &FF7
+0000025B: 3289  ;         SUB M_TWO_PATTERN      ; Check if digit is 2
+0000025C: 6260  ;         JNE test_9_2
+0000025D:       ; 
+0000025D: 0288  ;         LDA M_ONE_PATTERN
+0000025E: 1FF7  ;         STA &FF7
+0000025F: 4145  ;         JMP main_loop
+00000260:       ; 
+00000260:       ;     test_9_2
+00000260: 0FF7  ;         LDA &FF7
+00000261: 3288  ;         SUB M_ONE_PATTERN         ; Check if digit is 1
+00000262: 6266  ;         JNE test_0_2
+00000263:       ; 
+00000263: 0287  ;         LDA M_ZERO_PATTERN
+00000264: 1FF7  ;         STA &FF7
+00000265: 4145  ;         JMP main_loop
+00000266:       ; 
+00000266:       ;     test_0_2
+00000266: 0FF7  ;         LDA &FF7
+00000267: 3287  ;         SUB M_ZERO_PATTERN          ; Check if digit is 0
+00000268: 4145  ;         JMP main_loop
+00000269:       ;     
+00000269:       ; 
+00000269:       ;     
+00000269:       ; check_end
+00000269: 0FF6  ;     LDA &FF6
+0000026A: 327D  ;     SUB ZERO_PATTERN    
+0000026B: 6201  ;     JNE check_0s
+0000026C:       ;     
+0000026C: 0FF5  ;     LDA &FF5
+0000026D: 327D  ;     SUB ZERO_PATTERN
+0000026E: 6145  ;     JNE one_second
+0000026F: 4270  ;     JMP end
+00000270:       ; 
+00000270:       ; 
+00000270:       ; 
+00000270:       ; end
+00000270:       ; 
+00000270: 02A8  ;     LDA No_PATTERN
+00000271: 1FFF  ;     STA &FFF
+00000272: 02A0  ;     LDA all_lights
+00000273: 1FFF  ;     STA &FFF
+00000274:       ; 
+00000274: 02A1  ;     LDA sound
+00000275: 1FFD  ;     STA &FFD
+00000276:       ; 
+00000276:       ; 
+00000276:       ; 
+00000276:       ; check_reset_button
+00000276: 0FF1  ;     LDA &FF1
+00000277: 600B  ;     JNE start_lights
+00000278: 4276  ;     JMP check_reset_button
+00000279:       ; 
+00000279:       ; 
+00000279:       ; 
+00000279:       ; ; Define the binary patterns for each character
+00000279: 00F6  ; H_PATTERN defw &F6    ; 0b00000011110110 for 'H'
+0000027A: 00F9  ; E_PATTERN defw &F9    ; 0b00000011111001 for 'E'
+0000027B: 0038  ; L_PATTERN defw &38    ; 0b00000000111000 for 'L'
+0000027C: 003F  ; O_PATTERN defw &3F    ; 0b00000000111111 for 'O'
+0000027D:       ; 
+0000027D:       ; 
+0000027D:       ; ; Define the 14-segment patterns for seconds (0-9)
+0000027D: 003F  ; ZERO_PATTERN defw &3F  ; 0b000000000111111
+0000027E: 0406  ; ONE_PATTERN defw &406  ; 0b000010000000110
+0000027F: 00DB  ; TWO_PATTERN defw &DB   ; 0b000000011011011
+00000280: 00CF  ; THREE_PATTERN defw &CF ; 0b000000011001111
+00000281: 00E6  ; FOUR_PATTERN defw &E6  ; 0b000000011100110
+00000282: 00ED  ; FIVE_PATTERN defw &ED  ; 0b000000011101101
+00000283: 00FD  ; SIX_PATTERN defw &FD   ; 0b000000011111101
+00000284: 0027  ; SEVEN_PATTERN defw &27 ; 0b000000000100111
+00000285: 00FF  ; EIGHT_PATTERN defw &FF ; 0b000000011111111
+00000286: 00EF  ; NINE_PATTERN defw &EF  ; 0b000000011101111
+00000287:       ; 
+00000287:       ; 
+00000287:       ; ; Define the 14-segment patterns for minutes (0-9)
+00000287: 403F  ; M_ZERO_PATTERN defw &403F  ; 0b100000000111111
+00000288: 4406  ; M_ONE_PATTERN defw &4406   ; 0b100010000000110
+00000289: 40DB  ; M_TWO_PATTERN defw &40DB   ; 0b100000011011011
+0000028A: 40CF  ; M_THREE_PATTERN defw &40CF ; 0b100000011001111
+0000028B: 40E6  ; M_FOUR_PATTERN defw &40E6  ; 0b100000011100110
+0000028C: 40ED  ; M_FIVE_PATTERN defw &40ED  ; 0b100000011101101
+0000028D: 40FD  ; M_SIX_PATTERN defw &40FD   ; 0b100000011111101
+0000028E: 4027  ; M_SEVEN_PATTERN defw &4027 ; 0b100000000100111
+0000028F: 40FF  ; M_EIGHT_PATTERN defw &40FF ; 0b100000011111111
+00000290: 40EF  ; M_NINE_PATTERN defw &40EF  ; 0b100000011101111
+00000291:       ; 
+00000291:       ; 
+00000291:       ; 
+00000291:       ; ;INPUT FROM KEYBOARD
+00000291: 0001  ; K0_PATTERN defw &1 ; 0b0000000000000001
+00000292: 0002  ; K1_PATTERN defw &2 ; 0b0000000000000010
+00000293: 0004  ; K2_PATTERN defw &4 ; 0b0000000000000100
+00000294: 0008  ; K3_PATTERN defw &8 ; 0b0000000000001000
+00000295: 0010  ; K4_PATTERN defw &10 ; 0b0000000000010000
+00000296: 0020  ; K5_PATTERN defw &20 ; 0b0000000000100000
+00000297: 0040  ; K6_PATTERN defw &40 ; 0b0000000001000000
+00000298: 0080  ; K7_PATTERN defw &80 ; 0b0000000010000000
+00000299: 0100  ; K8_PATTERN defw &100 ; 0b0000000100000000
+0000029A: 0200  ; K9_PATTERN defw &200 ; 0b0000001000000000
+0000029B: 1000  ; KC_PATTERN defw &1000 ; 0b0001000000000000
+0000029C: 0400  ; KA_PATTERN defw &400 ; 0b0000010000000000
+0000029D:       ; 
+0000029D:       ; 
+0000029D:       ; ; Traffic Lights
+0000029D: 048C  ; red_light defw &48C   ; 0b0000010010001100 for all red lights
+0000029E: 0242  ; amber_light defw &0242; 0b0000001001000010 for all amber lights
+0000029F: 0131  ; green_light defw &0131; 0b0000000100110001 for all green lights
+000002A0: 07FF  ; all_lights defw &7FF  ; 0b0000011111111111 for all lights
+000002A1:       ; 
+000002A1:       ; 
+000002A1:       ; ; Sound labels
+000002A1: 8E35  ; sound defw &8E35
+000002A2: 0003  ; sound_counter defw &0003
+000002A3:       ; 
+000002A3:       ; 
+000002A3:       ; ; Delay labels
+000002A3: 0001  ; one defw &0001
+000002A4: FFFF  ; delay_1 defw &FFFF
+000002A5: 0010  ; delay_i defw &0010
+000002A6: FFFF  ; delay_j defw &FFFF
+000002A7: 0000  ; loop_i_acc_store defw 0
+000002A8:       ; 
+000002A8:       ; 
+000002A8:       ; ; Reset display/light label
+000002A8: 0000  ; No_PATTERN defw &0
+000002A9:       ; 
+
+Symbol Table: Labels
+: check_button                      00000008  Local --
+: start_lights                      0000000B  Local --
+: loopi                             00000018  Local --
+: loopj                             0000001B  Local --
+: loopj_inner                       0000001D  Local --
+: close_hello                       00000021  Local --
+: input_digit_1                     00000029  Local --
+: input_1                           00000029  Local --
+: input_2                           0000002F  Local --
+: input_3                           00000035  Local --
+: input_4                           0000003B  Local --
+: input_5                           00000041  Local --
+: input_6                           00000047  Local --
+: input_7                           0000004D  Local --
+: input_8                           00000053  Local --
+: input_9                           00000059  Local --
+: input_10                          0000005F  Local --
+: input_digit_2                     00000065  Local --
+: delay_number_loop_1_1             00000066  Local --
+: delay_number_loop_1_2             00000069  Local --
+: delay_number_loop_1_3             0000006C  Local --
+: delay_number_loop_1_4             0000006F  Local --
+: delay_number_loop_1_5             00000072  Local --
+: delay_number_loop_1_6             00000075  Local --
+: input_11                          00000079  Local --
+: input_12                          00000081  Local --
+: input_13                          00000089  Local --
+: input_14                          00000091  Local --
+: input_15                          00000099  Local --
+: input_16                          000000A1  Local --
+: input_digit_3                     000000A9  Local --
+: delay_number_loop_2_1             000000AA  Local --
+: delay_number_loop_2_2             000000AD  Local --
+: delay_number_loop_2_3             000000B0  Local --
+: delay_number_loop_2_4             000000B3  Local --
+: delay_number_loop_2_5             000000B6  Local --
+: delay_number_loop_2_6             000000B9  Local --
+: input_31                          000000BD  Local --
+: input_32                          000000C7  Local --
+: input_33                          000000D1  Local --
+: input_34                          000000DB  Local --
+: input_35                          000000E5  Local --
+: input_36                          000000EF  Local --
+: input_37                          000000F9  Local --
+: input_38                          00000103  Local --
+: input_39                          0000010D  Local --
+: input_310                         00000117  Local --
+: clear_enter                       00000121  Local --
+: delay_number_loop_3_1             00000122  Local --
+: delay_number_loop_3_2             00000125  Local --
+: delay_number_loop_3_3             00000128  Local --
+: delay_number_loop_3_4             0000012B  Local --
+: delay_number_loop_3_5             0000012E  Local --
+: delay_number_loop_3_6             00000131  Local --
+: input_41                          00000135  Local --
+: input_42                          00000141  Local --
+: main_loop                         00000145  Local --
+: one_second                        00000145  Local --
+: test_1                            00000145  Local --
+: loop_i_2                          0000014D  Local --
+: loop_j_2                          00000150  Local --
+: loop_j_2_inner                    00000152  Local --
+: eight                             00000156  Local --
+: test_2                            00000158  Local --
+: loop_i_3                          00000160  Local --
+: loop_j_3                          00000163  Local --
+: loop_j_3_inner                    00000165  Local --
+: seven                             00000169  Local --
+: test_3                            0000016B  Local --
+: loop_i_4                          00000173  Local --
+: loop_j_4                          00000176  Local --
+: loop_j_4_inner                    00000178  Local --
+: six                               0000017C  Local --
+: test_4                            0000017E  Local --
+: loop_i_5                          00000186  Local --
+: loop_j_5                          00000189  Local --
+: loop_j_5_inner                    0000018B  Local --
+: five                              0000018F  Local --
+: test_5                            00000191  Local --
+: loop_i_6                          00000199  Local --
+: loop_j_6                          0000019C  Local --
+: loop_j_6_inner                    0000019E  Local --
+: four                              000001A2  Local --
+: test_6                            000001A4  Local --
+: loop_i_7                          000001AC  Local --
+: loop_j_7                          000001AF  Local --
+: loop_j_7_inner                    000001B1  Local --
+: three                             000001B5  Local --
+: test_7                            000001B7  Local --
+: loop_i_8                          000001BF  Local --
+: loop_j_8                          000001C2  Local --
+: loop_j_8_inner                    000001C4  Local --
+: two                               000001C8  Local --
+: test_8                            000001CA  Local --
+: loop_i_9                          000001D2  Local --
+: loop_j_9                          000001D5  Local --
+: loop_j_9_inner                    000001D7  Local --
+: One                               000001DB  Local --
+: test_9                            000001DD  Local --
+: loop_i_10                         000001E5  Local --
+: loop_j_10                         000001E8  Local --
+: loop_j_10_inner                   000001EA  Local --
+: zero                              000001EE  Local --
+: test_0                            000001F0  Local --
+: loop_i_1                          000001F8  Local --
+: loop_j_1                          000001FB  Local --
+: loop_j_1_inner                    000001FD  Local --
+: check_0s                          00000201  Local --
+: two_second                        0000020B  Local --
+: test_5_1                          0000020D  Local --
+: test_6_1                          00000213  Local --
+: test_7_1                          00000219  Local --
+: test_8_1                          0000021F  Local --
+: test_9_1                          00000225  Local --
+: test_0_1                          0000022B  Local --
+: one_minute                        00000230  Local --
+: test_1_2                          00000230  Local --
+: test_2_2                          00000236  Local --
+: test_3_2                          0000023C  Local --
+: test_4_2                          00000242  Local --
+: test_5_2                          00000248  Local --
+: test_6_2                          0000024E  Local --
+: test_7_2                          00000254  Local --
+: test_8_2                          0000025A  Local --
+: test_9_2                          00000260  Local --
+: test_0_2                          00000266  Local --
+: check_end                         00000269  Local --
+: end                               00000270  Local --
+: check_reset_button                00000276  Local --
+: H_PATTERN                         00000279  Local --
+: E_PATTERN                         0000027A  Local --
+: L_PATTERN                         0000027B  Local --
+: O_PATTERN                         0000027C  Local --
+: ZERO_PATTERN                      0000027D  Local --
+: ONE_PATTERN                       0000027E  Local --
+: TWO_PATTERN                       0000027F  Local --
+: THREE_PATTERN                     00000280  Local --
+: FOUR_PATTERN                      00000281  Local --
+: FIVE_PATTERN                      00000282  Local --
+: SIX_PATTERN                       00000283  Local --
+: SEVEN_PATTERN                     00000284  Local --
+: EIGHT_PATTERN                     00000285  Local --
+: NINE_PATTERN                      00000286  Local --
+: M_ZERO_PATTERN                    00000287  Local --
+: M_ONE_PATTERN                     00000288  Local --
+: M_TWO_PATTERN                     00000289  Local --
+: M_THREE_PATTERN                   0000028A  Local --
+: M_FOUR_PATTERN                    0000028B  Local --
+: M_FIVE_PATTERN                    0000028C  Local --
+: M_SIX_PATTERN                     0000028D  Local --
+: M_SEVEN_PATTERN                   0000028E  Local --
+: M_EIGHT_PATTERN                   0000028F  Local --
+: M_NINE_PATTERN                    00000290  Local --
+: K0_PATTERN                        00000291  Local --
+: K1_PATTERN                        00000292  Local --
+: K2_PATTERN                        00000293  Local --
+: K3_PATTERN                        00000294  Local --
+: K4_PATTERN                        00000295  Local --
+: K5_PATTERN                        00000296  Local --
+: K6_PATTERN                        00000297  Local --
+: K7_PATTERN                        00000298  Local --
+: K8_PATTERN                        00000299  Local --
+: K9_PATTERN                        0000029A  Local --
+: KC_PATTERN                        0000029B  Local --
+: KA_PATTERN                        0000029C  Local --
+: red_light                         0000029D  Local --
+: amber_light                       0000029E  Local --
+: green_light                       0000029F  Local --
+: all_lights                        000002A0  Local --
+: sound                             000002A1  Local --
+: sound_counter                     000002A2  Local --
+: one                               000002A3  Local --
+: delay_1                           000002A4  Local --
+: delay_i                           000002A5  Local --
+: delay_j                           000002A6  Local --
+: loop_i_acc_store                  000002A7  Local --
+: No_PATTERN                        000002A8  Local --
